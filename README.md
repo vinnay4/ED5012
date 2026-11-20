@@ -10,9 +10,9 @@ FormDrift is a Progressive Web App that analyses a video of a squat set **on the
 
 | | |
 |---|---|
-| Live app | See [Deployment](#deployment) (GitHub Pages workflow included) |
-| Project report | [`docs/REPORT.md`](docs/REPORT.md) · [PDF](docs/FormDrift_Report.pdf) |
-| Google Meet demo script | [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md) · [PDF](docs/FormDrift_Demo_Script.pdf) |
+| Live app | **https://formdrift.apps.grok.bot** |
+| Project report (20 pages) | [PDF](docs/report/FormDrift_Report.pdf) · [LaTeX source](docs/report/FormDrift_Report.tex) |
+| Presenter's guide (talk, demo steps, Q&A) | [PDF](docs/report/FormDrift_Presenter_Guide.pdf) · [LaTeX source](docs/report/FormDrift_Presenter_Guide.tex) |
 | Slide deck | In the app at `#/present` (arrow keys; **F** for fullscreen) · [PDF backup](docs/FormDrift_Slides.pdf) |
 | Backup demo video (silent, 94 s) | [`docs/media/FormDrift_demo_backup.mp4`](docs/media/FormDrift_demo_backup.mp4) |
 
@@ -21,7 +21,7 @@ FormDrift is a Progressive Web App that analyses a video of a squat set **on the
 - **One-click demo mode.** Four preloaded sets: two simulated fatigue sets with known ground truth (side and front camera) and two real, Creative Commons licensed videos. No camera, wearable or hardware is needed.
 - **Analyse your own video.** Drop an MP4/WebM/MOV file. MediaPipe Pose Landmarker runs in the browser (WebAssembly + WebGL) and nothing is uploaded.
 - **Per-rep analysis.** Automatic camera-view detection (side / front / oblique), rep segmentation, depth, trunk lean, knee tracking (valgus), lateral hip shift, concentric velocity, movement consistency (DTW), tempo, a 100-point rep score, drift onset and a trend line.
-- **Honest by design.** Every result is labelled *real video · measured*, *simulated data* or *your video · measured*. Metrics that the camera angle cannot support are shown as "not measurable", never guessed. Low-confidence reps are flagged.
+- **Clear labelling.** Every result is labelled *real video · measured*, *simulated data* or *your video · measured*. Metrics that the camera angle cannot support are shown as "not measurable". Low-confidence reps are flagged.
 - **Human-factors feedback.** A cue engine with priority, cooldown, repeat limits and escalation. Feedback modes are combined, visual, audio (Web Speech), haptic (Vibration API) and silent.
 - **Biomechanics and anthropometry.** A static L5/S1 compression estimate per rep (compared with the NIOSH action limit) and measured segment ratios against Drillis & Contini norms.
 - **Evaluation built in.** A ground-truth comparison for the simulated sets, real-clip rep counts, a noise-robustness sweep, and a SUS + NASA-TLX study toolkit with CSV export.
@@ -105,6 +105,8 @@ node scripts/extract-poses.mjs http://127.0.0.1:5173/
 
 The build output is a static folder (`dist/`) with relative paths and hash routing, so it can be hosted anywhere.
 
+**Live deployment.** The current build is published at https://formdrift.apps.grok.bot.
+
 **GitHub Pages (workflow included).** `.github/workflows/deploy.yml` lints, verifies and builds on every push and pull request, and deploys `main` to Pages. One-time setup by the repository owner: **Settings → Pages → Build and deployment → Source: GitHub Actions**. After that, merging to `main` publishes to `https://<user>.github.io/<repo>/`. Re-run the workflow from the Actions tab if the first run happened before Pages was enabled.
 
 **Any static host.** Run `npm run build` and upload `dist/` to Netlify, Vercel, Cloudflare Pages or similar. No server configuration is needed.
@@ -120,4 +122,4 @@ The build output is a static folder (`dist/`) with relative paths and hash routi
 - **Demo videos** (Wikimedia Commons, CC BY-SA 4.0): "Kettlebell Racked Squats (side view)" by Taco Fleur; "Barbell back squat exercise demonstration" by Your Move (ymove.app). Trimmed, cropped and re-encoded. These derivative clips are shared under the same licence.
 - **Fonts:** Inter and JetBrains Mono (SIL OFL), via Fontsource.
 
-The full reference list is in [`docs/REPORT.md`](docs/REPORT.md#references).
+The full reference list is in the [project report](docs/report/FormDrift_Report.pdf).

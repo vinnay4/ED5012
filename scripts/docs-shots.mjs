@@ -1,4 +1,4 @@
-// Captures the screenshots used in docs/REPORT.md. Needs `npm run dev` running.
+// Captures the screenshots used in the project report (docs/report). Needs `npm run dev` running.
 // Usage: node scripts/docs-shots.mjs [baseUrl]
 import { chromium } from 'playwright'
 import { mkdirSync } from 'node:fs'
@@ -70,7 +70,7 @@ await region('body-proportions', 'Segment proportions', 380)
 
 await go('/session/oblique-barbell-back-squat')
 await analyse()
-await region('oblique-honest', 'Reps counted', 560)
+await region('oblique-view', 'Reps counted', 560)
 
 await go('/validation')
 await page.getByRole('button', { name: /Run noise sweep/ }).click()

@@ -144,14 +144,14 @@ function Session({ id }: { id: string }) {
         <Link to="/analyze" className="btn-ghost !px-3 !py-1.5">
           <ArrowLeft className="h-4 w-4" /> Library
         </Link>
-        <div className="min-w-0 flex-1">
+        <div className="order-last w-full min-w-0 sm:order-none sm:w-auto sm:flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <h1 className="truncate text-xl font-semibold text-white sm:text-2xl">{title}</h1>
+            <h1 className="text-xl sm:truncate font-semibold text-white sm:text-2xl">{title}</h1>
             <SourceBadge kind={kind} />
           </div>
           <div className="text-sm text-ink-400">{clip?.subtitle ?? (upload ? `${(upload.size / 1e6).toFixed(1)} MB · analysed on this device` : '')}</div>
         </div>
-        <button className="btn-ghost !px-3 !py-1.5" onClick={() => setShowSettings((s) => !s)}>
+        <button className="btn-ghost ml-auto !px-3 !py-1.5" onClick={() => setShowSettings((s) => !s)}>
           <Settings2 className="h-4 w-4" /> Settings
         </button>
       </div>

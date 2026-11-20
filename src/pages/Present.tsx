@@ -53,18 +53,19 @@ export default function Present() {
           Form<span className="text-brand-400">Drift</span>
         </h1>
         <p className="mt-4 text-[1.6em] leading-snug text-ink-200">Detecting exercise-technique drift that lifters cannot perceive, as an offline PWA.</p>
-        <p className="mt-8 text-[1.1em] text-ink-400">Vinnay Gupta · Advanced Applications of Human Factors in Design · IIT Madras</p>
+        <p className="mt-8 text-[1.1em] text-ink-400">Vinnay Gupta (ED22B073) · ED5012 Advanced Applications of Human Factors in Design · IIT Madras</p>
+        <p className="mt-2 text-[1em] text-brand-300">formdrift.apps.grok.bot</p>
       </div>
       <div className="overflow-hidden rounded-3xl border border-white/10">
         <HeroCanvas />
       </div>
     </div>,
 
-    <Slide key="issue" eyebrow="The human issue" title="Rep 1 feels the same as rep 9. It isn’t.">
+    <Slide key="issue" eyebrow="The human issue" title="Late reps feel like early reps, but they are not">
       <div className="grid grid-cols-3 gap-[3%]">
         <Box title="Can’t see yourself">Without a coach or mirror, you have no external view of your own sagittal-plane form.</Box>
         <Box title="Fatigue blunts perception" accent="#fbbf24">
-          Joint-position sense degrades as muscles fatigue (Proske &amp; Gandevia, 2012), exactly when technique slips.
+          Joint-position sense degrades as muscles fatigue (Proske &amp; Gandevia, 2012), which is when technique slips.
         </Box>
         <Box title="Drift is gradual" accent="#fb7185">
           Depth shrinks a few percent, the chest drops a few degrees per rep. No single rep feels wrong.
@@ -137,7 +138,7 @@ export default function Present() {
           Knee tracking (knee/ankle separation) · lateral hip shift · depth · velocity
         </Box>
         <Box title="Oblique view" accent="#fbbf24">
-          Depth · tempo · velocity · consistency only. Others are shown as <i>not measurable</i>, never guessed.
+          Depth · tempo · velocity · consistency only. Others are shown as <i>not measurable</i>.
         </Box>
       </div>
       <div className="mt-[3%] grid grid-cols-2 gap-[3%] text-[0.92em]">
@@ -145,7 +146,7 @@ export default function Present() {
           Minor ≥ 15 %, major ≥ 30 % from baseline (angles: 8°/15°). Velocity loss ≥ 20 % indicates fatigue (González-Badillo &amp; Sánchez-Medina, 2010).
         </Box>
         <Box title="Static L5/S1 model (Chaffin)" accent="#34d399">
-          Trunk lean, body mass and load give the lumbar moment and compression, compared with the NIOSH 3.4 kN action limit. It makes the cost of leaning tangible.
+          Trunk lean, body mass and load give the lumbar moment and compression, compared with the NIOSH 3.4 kN action limit, so extra lean is shown as extra load.
         </Box>
       </div>
     </Slide>,
@@ -199,12 +200,12 @@ export default function Present() {
       </ul>
     </Slide>,
 
-    <Slide key="demo" eyebrow="Live demonstration" title="Let’s see it work">
+    <Slide key="demo" eyebrow="Live demonstration" title="Demo">
       <div className="grid grid-cols-3 gap-[3%]">
         {[
           ['sim-side', 'Fatigue set · side', 'Simulated, known truth. Watch cues fire as form drifts.'],
           ['side-kettlebell-squat', 'Kettlebell squat · real', 'Real video, MediaPipe. All reps counted, no false alarms.'],
-          ['oblique-barbell-back-squat', 'Barbell squat · oblique', 'Honest view handling: only what this angle supports.'],
+          ['oblique-barbell-back-squat', 'Barbell squat · oblique', 'Oblique view: only what this angle supports.'],
         ].map(([id, t, d]) => (
           <Link
             key={id}
@@ -240,10 +241,10 @@ export default function Present() {
       </p>
     </Slide>,
 
-    <Slide key="aes" eyebrow="Level 5 · Aesthetic and usability" title="Calm, legible, honest">
+    <Slide key="aes" eyebrow="Level 5 · Aesthetic and usability" title="Legible and clearly labelled">
       <div className="grid grid-cols-3 gap-[2.5%] text-[0.95em]">
         <Box title="Glanceable">Dark, high-contrast UI; one status colour (green, amber, rose) with a matching text label, so colour is never the only signal.</Box>
-        <Box title="Honest by design" accent="#a78bfa">
+        <Box title="Clear labelling" accent="#a78bfa">
           Every result is labelled real, simulated or uploaded. Unmeasurable metrics say so. Low-confidence reps are marked.
         </Box>
         <Box title="Self-perception check" accent="#fbbf24">
@@ -293,7 +294,7 @@ export default function Present() {
       <Logo />
       <h2 className="mt-6 text-[3.4em] font-semibold text-white">Thank you</h2>
       <p className="mt-2 text-[1.3em] text-ink-300">Questions?</p>
-      <p className="mt-8 text-[1em] text-ink-400">Pages: Analyse · Human factors · Validation · Study</p>
+      <p className="mt-8 text-[1.1em] text-brand-300">formdrift.apps.grok.bot</p>
     </div>,
   ]
 

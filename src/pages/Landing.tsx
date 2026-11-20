@@ -37,7 +37,7 @@ const LADDER = [
     user: 'Affective needs',
     work: 'Art',
     icon: Sparkles,
-    how: 'A calm, glanceable interface with one colour ring and one word during the set, and the detail saved for afterwards. Built-in SUS and NASA-TLX questionnaires measure how it feels.',
+    how: 'During the set the screen shows one colour ring and one short word; the detail is saved for afterwards. Built-in SUS and NASA-TLX questionnaires measure how it feels.',
   },
 ]
 
@@ -56,7 +56,7 @@ export default function Landing() {
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-300">
             People who train without a coach rarely see their technique slip as fatigue builds. FormDrift analyses an exercise video on your device, learns <em>your</em> baseline
-            from your first reps, and shows exactly when depth, trunk angle, knee tracking or speed start to drift, with one calm cue at a time.
+            from your first reps, and shows when depth, trunk angle, knee tracking or speed start to drift, with one short cue at a time.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/session/sim-side" className="btn-primary !px-5 !py-3 text-base">
@@ -83,7 +83,7 @@ export default function Landing() {
 
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
         <SectionTitle eyebrow="The human issue" title="Unsupervised training hides a perception problem">
-          This is a human-capability issue, not a hardware gap: the lifter cannot sense their own deterioration, and generic rules do not fit their body.
+          The limitation is in human perception. Lifters cannot sense their own deterioration, and generic rules do not fit every body.
         </SectionTitle>
         <div className="grid gap-4 md:grid-cols-3">
           {[
@@ -99,7 +99,7 @@ export default function Landing() {
             },
             {
               icon: UserRound,
-              title: 'One size does not fit all',
+              title: 'Bodies differ',
               text: 'Femur, shin and torso proportions and ankle mobility change what a “good” squat looks like. Fixed angle thresholds misjudge individuals, so personal baselines are needed.',
             },
           ].map((c) => (
@@ -132,7 +132,7 @@ export default function Landing() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
-        <SectionTitle eyebrow="Human factors evaluation ladder" title="Every level of the user–work characteristics graph, addressed">
+        <SectionTitle eyebrow="Human factors evaluation ladder" title="All five levels of the user–work characteristics graph">
           Following the ED5012 framework, each user characteristic is paired with a work characteristic and an evaluation type.
         </SectionTitle>
         <div className="grid gap-3">
@@ -164,11 +164,11 @@ export default function Landing() {
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
         <div className="card card-pad grid gap-8 md:grid-cols-2">
           <div>
-            <div className="eyebrow mb-2">Technical honesty</div>
+            <div className="eyebrow mb-2">Scope of measurement</div>
             <h3 className="text-2xl font-semibold text-white">What is measured, and what is not</h3>
             <p className="mt-3 text-sm leading-relaxed text-ink-300">
               Real clips are analysed from MediaPipe landmarks. Simulated clips come from a kinematic model with known injected faults and are always labelled. A metric is only
-              reported when the camera view supports it; otherwise FormDrift says “not measurable” instead of guessing.
+              reported when the camera view supports it; otherwise it is marked “not measurable”.
             </p>
           </div>
           <ul className="grid gap-2 text-sm">

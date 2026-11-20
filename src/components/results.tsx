@@ -66,7 +66,7 @@ export function Overview({ a, onSeekRep }: { a: SessionAnalysis; onSeekRep: (rep
             <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-ok" />
             <div className="text-sm text-ink-200">
               <div className="font-semibold text-white">Technique stayed within your baseline for the whole set.</div>
-              No measured metric drifted past the minor threshold, so FormDrift raised no alarms. That matters as much as detecting drift: false alarms erode trust and add
+              No measured metric drifted past the minor threshold, so FormDrift raised no alarms. Avoiding false alarms is as important as detecting drift, because false alarms erode trust and add
               cognitive load.
             </div>
           </div>
@@ -581,7 +581,7 @@ export function AwarenessGap({ perceived, a }: { perceived: number | 'none' | 'u
     if (detected) {
       tone = 'warn'
       title = `You saw no change, but drift began at rep ${detected}.`
-      body = 'This is exactly the human issue FormDrift addresses: gradual deterioration is easy to miss.'
+      body = 'This is the human issue FormDrift addresses: gradual deterioration is easy to miss.'
     } else {
       title = 'You saw no change, and FormDrift agrees.'
       body = 'Technique stayed within your baseline. No false alarm was raised.'

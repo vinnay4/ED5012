@@ -139,7 +139,7 @@ export default function Validation() {
         </div>
         <p className="max-w-3xl text-sm text-ink-300">
           A kinematic mannequin performs 10 squats with fatigue faults that grow gradually from rep 4 and become large from rep 6. True values come from the noise-free 3D model;
-          the analyser only sees noisy 2D landmarks, exactly like MediaPipe output. A flag is correct when the analyser’s level (ok vs. drift) matches the level the true values
+          the analyser only sees noisy 2D landmarks, in the same form as MediaPipe output. A flag is correct when the analyser’s level (ok vs. drift) matches the level the true values
           deserve, using the same baseline rule.
         </p>
         <div className="grid gap-4">
@@ -248,7 +248,7 @@ export default function Validation() {
       </section>
 
       <Callout tone="honest" title="What this does and does not show">
-        The simulated test verifies that the measurement and decision pipeline is correct and robust. It does not prove that real fatigue looks like the simulated pattern, or that
+        The simulated test verifies that the measurement and decision pipeline is correct and tolerant of landmark noise. It does not prove that real fatigue looks like the simulated pattern, or that
         the thresholds match expert judgement. Those claims need the user study protocol on the Study page.
       </Callout>
     </div>

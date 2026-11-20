@@ -100,7 +100,7 @@ export const DEMO_CLIPS: DemoClip[] = [
     aspect: 540 / 960,
     description:
       'A barbell back squat filmed at roughly 45°. FormDrift recognises the oblique view and only reports what this angle supports: depth, tempo, velocity and consistency. Trunk lean and knee valgus are marked “not measurable” rather than guessed.',
-    lookFor: ['Oblique view detected automatically', 'Honest “not measurable” panel', 'About 10 % velocity loss on the last rep (below threshold)'],
+    lookFor: ['Oblique view detected automatically', '“Not measurable” panel for unsupported metrics', 'About 10 % velocity loss on the last rep (below threshold)'],
     credit: {
       title: 'Barbell back squat exercise demonstration',
       author: 'Your Move (ymove.app)',

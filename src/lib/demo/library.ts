@@ -1,5 +1,6 @@
 import type { PoseTrack } from '../pose/types'
 import { generateSyntheticTrack } from '../synthetic/generator'
+import { assetUrl } from '../assets'
 
 export interface Credit {
   title: string
@@ -29,7 +30,6 @@ export interface DemoClip {
   aspect: number
 }
 
-const base = import.meta.env.BASE_URL
 
 export const DEMO_CLIPS: DemoClip[] = [
   {
@@ -68,9 +68,9 @@ export const DEMO_CLIPS: DemoClip[] = [
     subtitle: 'Real video · 6 reps · MediaPipe',
     kind: 'real',
     camera: 'side',
-    video: `${base}samples/side-kettlebell-squat.mp4`,
-    poster: `${base}samples/side-kettlebell-squat.jpg`,
-    posePath: `${base}samples/side-kettlebell-squat.pose.json`,
+    video: assetUrl('samples/side-kettlebell-squat.mp4'),
+    poster: assetUrl('samples/side-kettlebell-squat.jpg'),
+    posePath: assetUrl('samples/side-kettlebell-squat.pose.json'),
     expectedReps: 6,
     loadKg: 16,
     aspect: 640 / 352,
@@ -92,9 +92,9 @@ export const DEMO_CLIPS: DemoClip[] = [
     subtitle: 'Real video · 4 reps · MediaPipe',
     kind: 'real',
     camera: 'oblique',
-    video: `${base}samples/oblique-barbell-back-squat.mp4`,
-    poster: `${base}samples/oblique-barbell-back-squat.jpg`,
-    posePath: `${base}samples/oblique-barbell-back-squat.pose.json`,
+    video: assetUrl('samples/oblique-barbell-back-squat.mp4'),
+    poster: assetUrl('samples/oblique-barbell-back-squat.jpg'),
+    posePath: assetUrl('samples/oblique-barbell-back-squat.pose.json'),
     expectedReps: 4,
     loadKg: 40,
     aspect: 540 / 960,

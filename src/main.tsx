@@ -4,6 +4,7 @@ import { registerSW } from 'virtual:pwa-register'
 import './index.css'
 import App from './App'
 import { DEMO_CLIPS } from './lib/demo/library'
+import { SINGLE_FILE } from './lib/assets'
 
 declare global {
   interface Window {
@@ -25,14 +26,15 @@ function warmDemoVideos() {
   for (const clip of DEMO_CLIPS) if (clip.video) fetch(clip.video).catch(() => undefined)
 }
 
-registerSW({
-  immediate: true,
-  onRegisteredSW(_url, registration) {
-    if (!registration || !('serviceWorker' in navigator)) return
-    if (navigator.serviceWorker.controller) warmDemoVideos()
-    else navigator.serviceWorker.addEventListener('controllerchange', warmDemoVideos, { once: true })
-  },
-})
+if (!SINGLE_FILE)
+  registerSW({
+    immediate: true,
+    onRegisteredSW(_url, registration) {
+      if (!registration || !('serviceWorker' in navigator)) return
+      if (navigator.serviceWorker.controller) warmDemoVideos()
+      else navigator.serviceWorker.addEventListener('controllerchange', warmDemoVideos, { once: true })
+    },
+  })
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

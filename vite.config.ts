@@ -1,14 +1,23 @@
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import { readFileSync } from 'node:fs'
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
+import { viteSingleFile } from 'vite-plugin-singlefile'
 
-export default defineConfig({
+const mediapipeVersion = JSON.parse(readFileSync('node_modules/@mediapipe/tasks-vision/package.json', 'utf8')).version as string
+
+// `--mode single` produces one self-contained HTML file (see scripts/build-single.mjs).
+export default defineConfig(({ mode }) => ({
   base: './',
+  define: { __MEDIAPIPE_VERSION__: JSON.stringify(mediapipeVersion) },
+  build: mode === 'single' ? { outDir: 'dist-single', copyPublicDir: false } : undefined,
   plugins: [
     react(),
     tailwindcss(),
+    mode === 'single' && viteSingleFile(),
     VitePWA({
+      disable: mode === 'single',
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'icons/*.png'],
       manifest: {
@@ -46,4 +55,4 @@ export default defineConfig({
       },
     }),
   ],
-})
+}))

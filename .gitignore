@@ -30,3 +30,4 @@ dist-ssr
 *.out
 *.toc
 *.synctex.gz
+dist-single

@@ -1,18 +1,26 @@
 import { FilesetResolver, PoseLandmarker } from '@mediapipe/tasks-vision'
 import type { PoseFrame, PoseTrack } from './types'
+import { SINGLE_FILE } from '../assets'
 
 export type ModelVariant = 'full'
 
 const base = import.meta.env.BASE_URL
 
+// The single-HTML build cannot carry the 24 MB model and runtime, so it loads them from the official CDNs.
+const WASM_DIR = SINGLE_FILE ? `https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${__MEDIAPIPE_VERSION__}/wasm` : `${base}mediapipe/wasm`
+const modelUrl = (variant: ModelVariant) =>
+  SINGLE_FILE
+    ? `https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_${variant}/float16/latest/pose_landmarker_${variant}.task`
+    : `${base}models/pose_landmarker_${variant}.task`
+
 let cached: { variant: ModelVariant; delegate: 'GPU' | 'CPU'; lm: PoseLandmarker } | null = null
 let lastTimestamp = 0
 
 async function createLandmarker(variant: ModelVariant, delegate: 'GPU' | 'CPU') {
-  const fileset = await FilesetResolver.forVisionTasks(`${base}mediapipe/wasm`)
+  const fileset = await FilesetResolver.forVisionTasks(WASM_DIR)
   return PoseLandmarker.createFromOptions(fileset, {
     baseOptions: {
-      modelAssetPath: `${base}models/pose_landmarker_${variant}.task`,
+      modelAssetPath: modelUrl(variant),
       delegate,
     },
     runningMode: 'VIDEO',

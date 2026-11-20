@@ -1,7 +1,7 @@
 import type { Rep, SessionAnalysis } from '../lib/analysis/analyze'
 import { METRICS, type MetricId } from '../lib/analysis/metrics'
 import { NIOSH_ACTION_LIMIT_N } from '../lib/analysis/biomech'
-import { LEVEL_COLOR, scoreColor } from './ui'
+import { LEVEL_COLOR } from './ui'
 
 const GRID = 'rgba(148,163,184,0.08)'
 const TEXT = '#93a0b5'
@@ -53,11 +53,10 @@ export function RepScoreChart({ a, onSelect, selected }: { a: SessionAnalysis; o
   return (
     <svg viewBox={`0 0 ${f.W} ${f.H}`} className="w-full" role="img" aria-label="Form score per repetition">
       <YAxis f={f} y={y} vals={[0, 25, 50, 75, 100]} />
-      <rect x={f.l} y={y(85)} width={f.W - f.l - f.r} height={y(65) - y(85)} fill={LEVEL_COLOR.minor} opacity={0.04} />
       {a.reps.map((r, i) => {
         const x = f.l + i * bw + bw * 0.18
         const w = bw * 0.64
-        const color = r.isBaseline ? LEVEL_COLOR.base : scoreColor(r.score)
+        const color = r.isBaseline ? LEVEL_COLOR.base : LEVEL_COLOR[r.worstLevel]
         const isSel = selected === r.index
         return (
           <g key={r.index} onClick={() => onSelect?.(r.index)} className={onSelect ? 'cursor-pointer' : ''}>
@@ -284,7 +283,7 @@ export function LumbarChart({ reps }: { reps: Rep[] }) {
   const baseMean = baseVal.length ? baseVal.reduce((a, b) => a + b, 0) / baseVal.length : NaN
   return (
     <svg viewBox={`0 0 ${f.W} ${f.H}`} className="w-full" role="img" aria-label="Estimated L5/S1 compression per repetition">
-      <YAxis f={f} y={y} vals={ticks(0, max, 4)} fmt={(v) => `${(v / 1000).toFixed(1)}k`} />
+      <YAxis f={f} y={y} vals={ticks(0, max, 4)} fmt={(v) => `${(v / 1000).toFixed(1)} kN`} />
       <line x1={f.l} x2={f.W - f.r} y1={y(NIOSH_ACTION_LIMIT_N)} y2={y(NIOSH_ACTION_LIMIT_N)} stroke={LEVEL_COLOR.major} strokeDasharray="6 4" />
       <text x={f.W - f.r - 4} y={y(NIOSH_ACTION_LIMIT_N) - 6} textAnchor="end" fontSize={10} fill={LEVEL_COLOR.major}>
         NIOSH action limit 3.4 kN

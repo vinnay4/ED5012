@@ -221,9 +221,9 @@ export const SessionPlayer = forwardRef<PlayerHandle, Props>(function SessionPla
               </div>
             )}
             {activeCue && (
-              <div key={`${activeCue.rep}-${activeCue.text}`} className="animate-pop pointer-events-none absolute inset-x-0 bottom-6 flex justify-center">
+              <div key={`${activeCue.rep}-${activeCue.text}`} className="animate-pop pointer-events-none absolute inset-x-0 top-3 flex justify-center px-20 sm:px-32">
                 <div
-                  className="rounded-2xl px-6 py-3 text-2xl font-extrabold tracking-wide uppercase shadow-2xl sm:text-3xl"
+                  className="rounded-2xl px-3 py-2 text-center text-base font-extrabold tracking-wide uppercase shadow-2xl sm:px-6 sm:py-3 sm:text-3xl"
                   style={{
                     background: activeCue.level === 'info' ? 'rgba(129,140,248,0.92)' : activeCue.level === 'major' ? 'rgba(251,113,133,0.95)' : 'rgba(251,191,36,0.95)',
                     color: '#070a10',

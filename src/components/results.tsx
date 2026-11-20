@@ -180,7 +180,7 @@ export function RepDetail({ a }: { a: SessionAnalysis }) {
                 <td className="num font-semibold text-white">
                   {r.index} {r.isBaseline && <LevelChip level="base" small />}
                 </td>
-                <td className="num font-semibold" style={{ color: r.isBaseline ? LEVEL_COLOR.base : scoreColor(r.score) }}>
+                <td className="num font-semibold" style={{ color: r.isBaseline ? LEVEL_COLOR.base : LEVEL_COLOR[r.worstLevel] }}>
                   {r.score}
                 </td>
                 {a.available.map((id) => {

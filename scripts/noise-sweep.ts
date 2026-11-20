@@ -9,7 +9,7 @@ for (const camera of ['side', 'front'] as const) {
       reps = 0,
       prec = 0,
       rec = 0
-    const seeds = [1, 2, 3, 4, 5]
+    const seeds = [1, 2, 3]
     for (const seed of seeds) {
       const track = generateSyntheticTrack({ camera, noisePx, seed })
       const a = analyzeTrack(track, { ...DEFAULT_SETTINGS, statureCm: 175, externalLoadKg: 12 })

@@ -11,6 +11,7 @@ FormDrift is a Progressive Web App that analyses a video of a squat set **on the
 | | |
 |---|---|
 | Live app | **https://formdrift.apps.grok.bot** |
+| Single-file version (double-click to open, works offline) | [`docs/FormDrift.html`](docs/FormDrift.html) |
 | Project report (20 pages) | [PDF](docs/report/FormDrift_Report.pdf) · [LaTeX source](docs/report/FormDrift_Report.tex) |
 | Presenter's guide (talk, demo steps, Q&A) | [PDF](docs/report/FormDrift_Presenter_Guide.pdf) · [LaTeX source](docs/report/FormDrift_Presenter_Guide.tex) |
 | Slide deck | In the app at `#/present` (arrow keys; **F** for fullscreen) · [PDF backup](docs/FormDrift_Slides.pdf) |
@@ -108,6 +109,8 @@ The build output is a static folder (`dist/`) with relative paths and hash routi
 **Live deployment.** The current build is published at https://formdrift.apps.grok.bot.
 
 **GitHub Pages (workflow included).** `.github/workflows/deploy.yml` lints, verifies and builds on every push and pull request, and deploys `main` to Pages. One-time setup by the repository owner: **Settings → Pages → Build and deployment → Source: GitHub Actions**. After that, merging to `main` publishes to `https://<user>.github.io/<repo>/`. Re-run the workflow from the Actions tab if the first run happened before Pages was enabled.
+
+**Single HTML file.** `npm run build:single` writes `docs/FormDrift.html` (about 4.5 MB): the whole app with the demo videos and landmarks embedded, so it opens from disk with no server and no internet. Only live analysis of a new video needs internet, because the 24 MB MediaPipe model is then loaded from Google's CDN. `node scripts/single-test.mjs` checks the file from `file://` with the network blocked.
 
 **Any static host.** Run `npm run build` and upload `dist/` to Netlify, Vercel, Cloudflare Pages or similar. No server configuration is needed.
 

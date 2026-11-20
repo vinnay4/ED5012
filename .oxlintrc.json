@@ -1,0 +1,8 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "typescript", "unicorn"],
+  "rules": {
+    "unicorn/no-new-array": "off"
+  },
+  "ignorePatterns": ["dist", "public/mediapipe"]
+}

@@ -25,7 +25,7 @@ FormDrift is a Progressive Web App that analyses a video of a squat set **on the
 - **Human-factors feedback.** A cue engine with priority, cooldown, repeat limits and escalation. Feedback modes are combined, visual, audio (Web Speech), haptic (Vibration API) and silent.
 - **Biomechanics and anthropometry.** A static L5/S1 compression estimate per rep (compared with the NIOSH action limit) and measured segment ratios against Drillis & Contini norms.
 - **Evaluation built in.** A ground-truth comparison for the simulated sets, real-clip rep counts, a noise-robustness sweep, and a SUS + NASA-TLX study toolkit with CSV export.
-- **PWA.** Installable and works offline after the first visit: the app shell, demo clips, model and WASM are all cached by the service worker.
+- **PWA.** Installable and works offline after the first visit: the service worker caches the app shell, demo videos and cached landmarks. The MediaPipe model and WASM are cached the first time a live analysis runs.
 
 ## Quick start
 
@@ -49,6 +49,7 @@ Checks:
 npm run lint       # oxlint
 npm run verify     # analysis regression checks (rep counts, F1, false alarms)
 npm run smoke      # headless browser walk-through of every page; needs `npm run dev` running and Google Chrome
+node scripts/offline-test.mjs   # offline PWA check; needs `npm run preview` running
 ```
 
 ## Using it

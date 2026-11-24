@@ -1,0 +1,123 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,margin=0.7in]{geometry}
+\usepackage{amsmath}
+\usepackage{gensymb}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{fancyhdr}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage[colorlinks=true, breaklinks=true, linkcolor=black, urlcolor=blue]{hyperref}
+\usepackage{xurl}
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.4em}
+\definecolor{keyred}{RGB}{165,25,25}
+\newcommand{\key}[1]{\textcolor{keyred}{\textbf{#1}}}
+\newcommand{\say}[1]{\textit{``#1''}}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\mdfdefinestyle{note}{linecolor=keyred,linewidth=1pt,roundcorner=4pt,backgroundcolor=keyred!4,innertopmargin=6pt,innerbottommargin=6pt}
+\setlist{itemsep=1pt,topsep=2pt,parsep=0pt}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[L]{\small ED5012 Term Project: FormDrift}
+\fancyhead[R]{\small Presenter's guide}
+\fancyfoot[C]{\thepage}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\begin{document}
+
+{\Large\textbf{FormDrift: presenter's guide}}\\[0.2em]
+Vinnay Gupta (ED22B073) \quad ED5012 Advanced Applications of Human Factors in Design
+
+\begin{mdframed}[style=note]
+\textbf{Live app:} \url{https://formdrift.apps.grok.bot}\\
+\textbf{Slides:} the \emph{Present} button in the app (press F for full screen, arrow keys to move)\\
+\textbf{Report:} \texttt{docs/report/FormDrift\_Report.pdf}\\
+\textbf{Backup video:} \texttt{docs/media/FormDrift\_demo\_backup.mp4}
+\end{mdframed}
+
+\section*{1. What the project is, in one paragraph}
+
+When people lift weights without a coach, their technique gets worse during a set as they tire: they squat less deep, lean the chest forward, let the knees cave in and slow down. They do not notice, because they cannot see themselves, fatigue dulls the body's sense of joint position, and the change is small from one repetition to the next. \key{FormDrift} is a web app that takes a video of a squat set, finds the body's joints in every frame, learns what \emph{your} first few repetitions look like, and then shows the repetition at which your form started to drift and by how much. During the set it gives at most one two-word cue per repetition (``Sit deeper'', ``Chest up''), and afterwards it explains what changed, why it matters and what drill to do. It runs entirely in the browser, needs no hardware, and works offline.
+
+\section*{2. Ideas you should be able to explain}
+
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.3cm} L}
+\toprule
+\textbf{Idea} & \textbf{Plain explanation} \\
+\midrule
+Pose estimation & Google's MediaPipe model finds 33 body points (shoulders, hips, knees, ankles, and so on) in each video frame. It runs inside the browser; no video is uploaded. \\
+Personal baseline & The median of your first three repetitions. Everything later is compared with this, not with a textbook angle, because body proportions differ (a long femur forces more forward lean). This is the \key{anthropometry} argument. \\
+Drift bands & A change of 15\% from baseline is ``minor'', 30\% is ``major'' (8\degree\ and 15\degree\ for trunk lean). \\
+Drift onset & The first repetition that is flagged together with the next one. Requiring two in a row ignores one-off noise. \\
+Velocity loss & How much slower the upward phase gets. About 20\% loss is a standard sign of fatigue in strength training research. \\
+View validity & A side camera can measure depth and trunk lean but not knees caving in; a front camera is the opposite. An angled (oblique) camera only supports depth and speed. The app marks the rest as ``not measurable''. \\
+L5/S1 load & A simple static model (Chaffin) that turns trunk lean into compression on the lower back in kilonewtons, shown against the NIOSH limit of 3.4 kN. It is used to compare repetitions, not as a medical number. \\
+DTW consistency & Dynamic time warping compares the shape of each repetition's hip-height curve with the baseline, which catches hitches and rhythm changes. \\
+Simulated vs real & Two demo sets are a computer-generated mannequin with faults added on purpose, so the true values are known and accuracy can be measured. Two are real videos of a lifter. Every screen says which is which. \\
+Precision, recall, F1 & Precision: of the repetitions flagged, how many really drifted. Recall: of the repetitions that really drifted, how many were flagged. F1 combines both (1.0 is perfect). \\
+MAE & Mean absolute error: average difference between the measured and true value (0.8\degree\ for trunk lean). \\
+PWA & A website that can be installed like an app and works offline because a service worker stores its files. \\
+\bottomrule
+\end{tabularx}
+\normalsize
+
+\textbf{The five levels of the course framework, one line each:} \key{anthropometry}, a personal baseline because bodies differ; \key{biomechanics}, joint angles, speed and spinal load per repetition; \key{information handling}, one short cue at the top of a repetition, safety first, a cooldown and a choice of audio, visual, vibration or silent; \key{functional evaluation}, accuracy measured against known truth, no false alarms on real video, and robustness to noise; \key{aesthetic evaluation}, a clean, high-contrast screen, clear labels and the ``when did your form slip?'' question.
+
+\section*{3. Before the presentation (10 minutes earlier)}
+
+\begin{enumerate}
+\item Open \url{https://formdrift.apps.grok.bot} in Google Chrome. Click \emph{Analyse}, then \emph{Fatigue set: side camera}, then \emph{Analyse this set} once, so that everything is cached.
+\item Close other tabs and notifications, set zoom to 100\% and turn the volume up (the cues are spoken).
+\item Click \emph{Present} in the top bar. In Google Meet choose \emph{Present now}, then \emph{A tab}, pick the FormDrift tab and tick \emph{Also share tab audio}. Press F for full screen.
+\end{enumerate}
+
+\section*{4. The talk, slide by slide (about 8 minutes)}
+
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.6cm} L}
+\toprule
+\textbf{Slide (time)} & \textbf{What to say} \\
+\midrule
+1 Title (0:00) & \say{My project is in Intelligent Sports. FormDrift is a web app that detects when your exercise technique starts to drift during a set, which lifters usually cannot perceive themselves.} \\
+2 Human issue (0:20) & \say{Three reasons. Training alone, you cannot see your own form. Fatigue reduces joint-position sense right when technique slips. And the drift is gradual, so no single repetition feels wrong.} \\
+3 Two checks (1:10) & \say{Is it a human issue? Yes: perception, fatigue, body differences and limited attention under effort. Can it be a PWA? Yes: pose estimation runs in the browser, cues use the browser's speech and vibration, and it works offline.} \\
+4 4W1H (1:40) & \say{Who: lifters training alone, with very different proportions. When and where: the later repetitions of a set, phone on the floor, not looking at the screen. What: depth loss, lean, knees caving, hip shift, slowing down. How: a personal baseline, drift detection, one cue per repetition and a summary.} \\
+5--7 Levels 1--3 (2:20) & Anthropometry: \say{No universal correct squat, so I compare you with your own first repetitions.} Biomechanics: \say{Each metric only from a view that supports it, plus a lower-back load model.} Information handling: \say{One two-word cue at the top of the repetition, never at the bottom, safety first, then silence after ``End the set''.} \\
+8 Demo (3:30) & Live demo, about 3.5 minutes; see Section 5. \\
+9 Evaluation (7:00) & \say{On simulated sets F1 is 1.0, depth error under 1\% of leg length and trunk-lean error under 1\degree. On real video, 10 of 10 repetitions counted and no false alarms. F1 stays above 0.9 with heavy noise.} \\
+10 Aesthetics (7:30) & \say{Clean and readable from a distance, everything labelled real or simulated, and a study toolkit with SUS and NASA-TLX.} \\
+11 Limits (7:55) & \say{Single 2D camera, thresholds not yet calibrated by experts, and the simulation checks the pipeline, not real fatigue. Next: run the user study and add a live camera mode.} \\
+12 Thanks (8:20) & Take questions. \\
+\bottomrule
+\end{tabularx}
+\normalsize
+
+\section*{5. The live demo, click by click}
+
+\begin{enumerate}
+\item On slide 8 click \emph{Fatigue set, side}. \say{This is a simulated set with known faults, labelled as simulated.} Click \emph{Analyse this set}.
+\item When it asks when your form slipped, pick a late repetition such as 8. It replies that measured drift began at repetition 6. \say{That gap is the human issue.}
+\item Press Play (1.5$\times$ speed is fine). Point at the repetition counter, the ring (purple while learning the baseline, then green, amber, red) and the spoken cues: ``Baseline set'', ``Sit deeper'', ``Chest up'', ``End the set''.
+\item Scroll to the overview: score falls from about 97 to 16, drift onset at repetition 6, velocity loss over 20\%. Open \emph{Feedback log} (cues held back and why) and \emph{Ground truth} (10 of 10 repetitions, 100\% precision and recall).
+\item Press Back, open \emph{Kettlebell squat, real}, analyse it. \say{Real video, consistent lifter, so the right answer is no alarms.} Open \emph{Biomechanics} to show the lower-back load chart against the NIOSH limit. Press Back and continue with slide 9.
+\end{enumerate}
+
+\section*{6. Likely questions}
+
+\begin{description}[style=unboxed,leftmargin=0pt,itemsep=2pt]
+\item[Isn't simulated data cheating?] It is labelled everywhere. It is the only way to know the true values and measure accuracy; the real clips show the same pipeline works on real video.
+\item[Why not live camera feedback?] The brief asked for a reliable demo with no hardware. The cue engine already works repetition by repetition, so live mode is an extension.
+\item[Why a personal baseline?] Bodies differ, so a fixed angle misjudges people, and fatigue shows up as change within the same person.
+\item[Where do the thresholds come from?] 15\%/30\% bands from rehabilitation tools, 8\degree/15\degree\ for lean, and about 20\% velocity loss from strength research. Expert calibration is future work.
+\item[Privacy?] The video never leaves the browser; there is no server.
+\item[What did you reuse?] MediaPipe (Apache-2.0) and ideas from TechnIQ (MIT). Unlicensed repositories were credited for ideas only; the videos are CC BY-SA and credited.
+\end{description}
+
+\textbf{If something goes wrong:} reload the tab (everything is cached). If the internet fails completely, play the backup video. If the live link will not open, double-click \texttt{docs/FormDrift.html}: the whole app in one file, which works without internet.
+
+\end{document}

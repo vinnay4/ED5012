@@ -6,21 +6,46 @@ export type ModelVariant = 'full'
 
 const base = import.meta.env.BASE_URL
 
-// The single-HTML build cannot carry the 24 MB model and runtime, so it loads them from the official CDNs.
-const WASM_DIR = SINGLE_FILE ? `https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${__MEDIAPIPE_VERSION__}/wasm` : `${base}mediapipe/wasm`
-const modelUrl = (variant: ModelVariant) =>
-  SINGLE_FILE
-    ? `https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_${variant}/float16/latest/pose_landmarker_${variant}.task`
-    : `${base}models/pose_landmarker_${variant}.task`
+const CDN_WASM_DIR = `https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${__MEDIAPIPE_VERSION__}/wasm`
+const cdnModel = (variant: ModelVariant) =>
+  `https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_${variant}/float16/latest/pose_landmarker_${variant}.task`
 
 let cached: { variant: ModelVariant; delegate: 'GPU' | 'CPU'; lm: PoseLandmarker } | null = null
 let lastTimestamp = 0
 
+/**
+ * Some static hosts drop very large files and answer with their HTML fallback page,
+ * which MediaPipe reports as "both async and sync fetching of the wasm failed".
+ * A self-hosted file is only used when the host really serves it.
+ */
+async function servedLocally(url: string) {
+  try {
+    const res = await fetch(url, { method: 'HEAD', cache: 'no-store' })
+    return res.ok && !(res.headers.get('content-type') ?? '').includes('text/html')
+  } catch {
+    // Offline: the service worker may still hold the self-hosted copy.
+    return true
+  }
+}
+
+async function resolveSources(variant: ModelVariant) {
+  if (SINGLE_FILE) return { wasmDir: CDN_WASM_DIR, model: cdnModel(variant) }
+  const localWasm = `${base}mediapipe/wasm`
+  const localModel = `${base}models/pose_landmarker_${variant}.task`
+  const [wasmOk, loaderOk, modelOk] = await Promise.all([
+    servedLocally(`${localWasm}/vision_wasm_internal.wasm`),
+    servedLocally(`${localWasm}/vision_wasm_internal.js`),
+    servedLocally(localModel),
+  ])
+  return { wasmDir: wasmOk && loaderOk ? localWasm : CDN_WASM_DIR, model: modelOk ? localModel : cdnModel(variant) }
+}
+
 async function createLandmarker(variant: ModelVariant, delegate: 'GPU' | 'CPU') {
-  const fileset = await FilesetResolver.forVisionTasks(WASM_DIR)
+  const { wasmDir, model } = await resolveSources(variant)
+  const fileset = await FilesetResolver.forVisionTasks(wasmDir)
   return PoseLandmarker.createFromOptions(fileset, {
     baseOptions: {
-      modelAssetPath: modelUrl(variant),
+      modelAssetPath: model,
       delegate,
     },
     runningMode: 'VIDEO',
@@ -40,7 +65,12 @@ export async function getLandmarker(variant: ModelVariant = 'full', preferGpu = 
     lm = await createLandmarker(variant, delegate)
   } catch {
     delegate = 'CPU'
-    lm = await createLandmarker(variant, delegate)
+    try {
+      lm = await createLandmarker(variant, delegate)
+    } catch (err) {
+      const detail = err instanceof Error ? err.message : String(err)
+      throw new Error(`The pose model could not be loaded. Check the internet connection and try again. (${detail})`)
+    }
   }
   cached = { variant, delegate, lm }
   return cached
